@@ -7,3 +7,7 @@
 - git:
     local-name: cwru_msgs
     uri: https://github.com/cwru-robotics/cwru_msgs.git
+    
+- git:
+    local-name: ros_control
+    uri: https://github.com/ros-controls/ros_control
