@@ -28,6 +28,7 @@ find_package(catkin REQUIRED COMPONENTS
   std_msgs
   actionlib_msgs
   trajectory_msgs
+  controller_manager
 )
 
 
@@ -49,18 +50,28 @@ catkin_package(
     std_msgs
 )
 
+set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11")
+
 include_directories(include ${Boost_INCLUDE_DIR} ${catkin_INCLUDE_DIRS} ${EIGEN3_INCLUDE_DIR})
 
 add_definitions(${EIGEN_DEFINITIONS})
 
 # Executables
 add_executable(davinci_traj_interpolator_as src/traj_interpolator_both_as.cpp)
+add_executable(davinci_traj_controller src/davinci_hwi.cpp)
 
 target_link_libraries(davinci_traj_interpolator_as
 	${catkin_LIBRARIES}
 )
+target_link_libraries(davinci_traj_controller
+	${catkin_LIBRARIES}
+)
 
 add_dependencies(davinci_traj_interpolator_as
+  ${cwru_davinci_traj_streamer_EXPORTED_TARGETS}
+  ${PROJECT_NAME}_gencpp
+)
+add_dependencies(davinci_traj_controller
   ${cwru_davinci_traj_streamer_EXPORTED_TARGETS}
   ${PROJECT_NAME}_gencpp
 )

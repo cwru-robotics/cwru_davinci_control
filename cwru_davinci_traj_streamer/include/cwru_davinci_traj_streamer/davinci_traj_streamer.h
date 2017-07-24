@@ -1,5 +1,8 @@
 // wsn test pgm to command joint values to Baxter
 // accept keyboard commands
+
+//NOT CURRENTLY USED
+
 #ifndef DAVINCI_TRAJ_STREAMER_H_
 #define DAVINCI_TRAJ_STREAMER_H_
 
