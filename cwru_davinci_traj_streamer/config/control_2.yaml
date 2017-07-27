@@ -2,7 +2,7 @@ dv_control/PSM2:
   # Publish all joint states -----------------------------------
   joint_state_controller:
     type: joint_state_controller/JointStateController
-    publish_rate: 10  
+    publish_rate: 20  
 
   # Position Controllers ---------------------------------------
   joint_traj_controller:

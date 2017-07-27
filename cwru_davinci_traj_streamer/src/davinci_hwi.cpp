@@ -21,7 +21,7 @@ int main(int argc, char** argv){
 
   ros::Time ts = ros::Time::now();
 
-  ros::Rate rate(50);
+  ros::Rate rate(20);
   while (ros::ok()){
     ros::Duration d = ros::Time::now() - ts;
     ts = ros::Time::now();
@@ -167,6 +167,7 @@ void DavinciHWI::pcp(){
   sensor_msgs::JointState outgoing;
   outgoing.name = jns;
   outgoing.position = cmd;
+  outgoing.header.stamp = ros::Time::now();
   
   joint_publisher.publish(outgoing);
 }
