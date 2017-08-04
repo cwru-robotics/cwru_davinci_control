@@ -15,6 +15,17 @@
 
 #ifndef DAVINCI_HWI_INCLUDE
 #define DAVINCI_HWI_INCLUDE
+
+/*!	@file cwru_davinci_hwi.h
+*	@brief Da Vinci hardware interface.
+*	
+*	Used for cwru_davinci_control and related applications.
+*/
+
+/*!	@classDavinciHWI cwru_davinci_hwi.h <cwru_davinci_traj_streamer/cwru_davinci_hwi.h>
+*	@brief DaVinci specific ROS hardware interface.
+*	Converts ROS trajectory-style commands (i.e. writes to memory addresses) into ROS topics that the DVRK or simulator can understand and execute.
+*/
 class DavinciHWI : public hardware_interface::RobotHW{
 
   private:
