@@ -11,7 +11,7 @@ int main(int argc, char** argv){
   ros::CallbackQueue queue;
   nh.setCallbackQueue(&queue);
   
-  ROS_INFO("Got argument %s", argv[1]);
+  //ROS_INFO("Got argument %s", argv[1]);
 
   DavinciHWI robot(nh, std::string(argv[1]));
   controller_manager::ControllerManager cm(&robot,nh);
@@ -21,7 +21,7 @@ int main(int argc, char** argv){
 
   ros::Time ts = ros::Time::now();
 
-  ros::Rate rate(20);
+  ros::Rate rate(40);
   while (ros::ok()){
     ros::Duration d = ros::Time::now() - ts;
     ts = ros::Time::now();
@@ -59,13 +59,18 @@ DavinciHWI::DavinciHWI(ros::NodeHandle & n, const std::string & psm){
 
   ROS_INFO("Setting up DP publishers.");
   joint_publisher = n.advertise<sensor_msgs::JointState>("/dvrk/" + psm + "/set_position_joint", 1, true);
+  mode_publisher = n.advertise<std_msgs::String>("/dvrk/" + psm + "/set_robot_state", 1, true);
+  
+  state = "";
+  wfcb = true;
 
   ROS_INFO("Subscribing to feedback...");
   
-  state_sub = n.subscribe("/dvrk/" + psm + "/joint_states", 1, &DavinciHWI::CB_update, this);
+  state_sub = n.subscribe("/dvrk/" + psm + "/state_joint_current", 1, &DavinciHWI::CB_update, this);
+  mode_sub = n.subscribe("/dvrk/" + psm + "/robot_state", 1, &DavinciHWI::CB_state, this);
 
   for(int i = 0; i < 7; i++){
-    cmd[i]=0;
+    cmd[i]=-10.0;
     pos[i]=0;
     vel[i]=0;
     eff[i]=0;
@@ -133,9 +138,12 @@ DavinciHWI::DavinciHWI(ros::NodeHandle & n, const std::string & psm){
   registerInterface(&jnt_pos_interface);
   registerInterface(&jnt_vel_interface);
   registerInterface(&jnt_eff_interface);
+  
+  ros::spinOnce();
 }
 
 void DavinciHWI::CB_update(const sensor_msgs::JointState::ConstPtr& incoming){
+
   std::vector<double> poss = incoming -> position;
   std::vector<double> vels = incoming -> velocity;
   std::vector<double> effs = incoming -> effort;
@@ -145,9 +153,28 @@ void DavinciHWI::CB_update(const sensor_msgs::JointState::ConstPtr& incoming){
     vel[i] = vels[i];
     eff[i] = effs[i];
   }
+  
+  wfcb = false;
+}
+
+void DavinciHWI::CB_state(const std_msgs::String::ConstPtr& incoming){
+	state = incoming->data;
 }
 
 void DavinciHWI::pcp(){
+
+if(state.compare("DVRK_READY") == 0){
+	ROS_INFO("READY STATE DETECTED, MOVING INTO JOINT MODE.");
+	std_msgs::String s;
+	s.data = "DVRK_POSITION_JOINT";
+	mode_publisher.publish(s);
+} else if(state.compare("") == 0){
+	ROS_INFO("NO STATE DETECTED. ASSUMING ALREADY HOMED.");
+	std_msgs::String s;
+	s.data = "DVRK_POSITION_JOINT";
+	mode_publisher.publish(s);
+}
+
   std::vector<std::string> jns = {
     "outer_yaw",
     "outer_pitch",
@@ -158,16 +185,22 @@ void DavinciHWI::pcp(){
     "jaw"
   };
   
-  //std::cout << "Publishing " << "  " << cmd[0] << "  " << cmd[1] << "  " << cmd[2] << "  " << cmd[3] << "  " << cmd[4] << "  " << cmd[5] << "  " << cmd[6] << "\n";
+  bool ok_to_pub = true;
   
   for(int i = 0; i < 7; i++){
-    //cmd[i] = pos[i] - cmd[i] * (1.0 / 1.0);
+    if(cmd[i] == -10.0){
+    	ok_to_pub = false;
+    }
   }
   
+  if(!wfcb && ok_to_pub){
+    std::cout << "Publishing " << "  " << cmd[0] << "  " << cmd[1] << "  " << cmd[2] << "  " << cmd[3] << "  " << cmd[4] << "  " << cmd[5] << "  " << cmd[6] << "\n";
+  std::cout << "Resultance " << "  " << pos[0] << "  " << pos[1] << "  " << pos[2] << "  " << pos[3] << "  " << pos[4] << "  " << pos[5] << "  " << pos[6] << "\n";
   sensor_msgs::JointState outgoing;
   outgoing.name = jns;
   outgoing.position = cmd;
-  outgoing.header.stamp = ros::Time::now();
+  outgoing.header.stamp = ros::Time::now() + ros::Duration(0.25);
   
   joint_publisher.publish(outgoing);
+  }
 }

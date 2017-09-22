@@ -21,7 +21,7 @@ endif()
 find_package(Boost REQUIRED COMPONENTS system thread)
 
 find_package(catkin REQUIRED COMPONENTS
-  cwru_davinci_interface
+  #cwru_davinci_interface
   actionlib
   message_generation
   sensor_msgs
@@ -46,7 +46,7 @@ catkin_package(
   CATKIN_DEPENDS
     roscpp
     actionlib
-    cwru_davinci_interface
+    #cwru_davinci_interface
     std_msgs
 )
 
@@ -57,20 +57,20 @@ include_directories(include ${Boost_INCLUDE_DIR} ${catkin_INCLUDE_DIRS} ${EIGEN3
 add_definitions(${EIGEN_DEFINITIONS})
 
 # Executables
-add_executable(davinci_traj_interpolator_as src/traj_interpolator_both_as.cpp)
+#add_executable(davinci_traj_interpolator_as src/traj_interpolator_both_as.cpp)
 add_executable(davinci_traj_controller src/davinci_hwi.cpp)
 
-target_link_libraries(davinci_traj_interpolator_as
-	${catkin_LIBRARIES}
-)
+#target_link_libraries(davinci_traj_interpolator_as
+#	${catkin_LIBRARIES}
+#)
 target_link_libraries(davinci_traj_controller
 	${catkin_LIBRARIES}
 )
 
-add_dependencies(davinci_traj_interpolator_as
-  ${cwru_davinci_traj_streamer_EXPORTED_TARGETS}
-  ${PROJECT_NAME}_gencpp
-)
+#add_dependencies(davinci_traj_interpolator_as
+#  ${cwru_davinci_traj_streamer_EXPORTED_TARGETS}
+#  ${PROJECT_NAME}_gencpp
+#)
 add_dependencies(davinci_traj_controller
   ${cwru_davinci_traj_streamer_EXPORTED_TARGETS}
   ${PROJECT_NAME}_gencpp

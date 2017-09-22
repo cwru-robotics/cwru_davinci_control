@@ -39,12 +39,17 @@ class DavinciHWI : public hardware_interface::RobotHW{
     double vel[7];
     double eff[7];
     
-    ros::Subscriber state_sub;
-    ros::Publisher joint_publisher;
+    std::string state;
+    
+    ros::Subscriber state_sub, mode_sub;
+    ros::Publisher joint_publisher, mode_publisher;
     
     void CB_update(const sensor_msgs::JointState::ConstPtr& incoming);
+    void CB_state(const std_msgs::String::ConstPtr& incoming);
   
   public:
+  	bool wfcb;
+  
     DavinciHWI(ros::NodeHandle & n, const std::string & psm);
     virtual ~DavinciHWI(){}
     
