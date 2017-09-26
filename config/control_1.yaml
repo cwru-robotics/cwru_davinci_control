@@ -1,4 +1,4 @@
-dv_control/PSM1:
+dvrk/PSM1:
   # Publish all joint states -----------------------------------
   joint_state_controller:
     type: joint_state_controller/JointStateController
@@ -7,6 +7,7 @@ dv_control/PSM1:
   # Position Controllers ---------------------------------------
   joint_traj_controller:
     type: "position_controllers/JointTrajectoryController"
+    #These should always reflect the joint names given in cwru_davinci_geometry_models/model
     joints:
         - outer_yaw
         - outer_pitch
