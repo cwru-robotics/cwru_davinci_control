@@ -13,6 +13,8 @@
 
 #include <iostream>
 
+#include <cwru_davinci_control/joint_names.h>
+
 #ifndef DAVINCI_HWI_INCLUDE
 #define DAVINCI_HWI_INCLUDE
 
