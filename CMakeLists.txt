@@ -5,14 +5,15 @@ project(cwru_davinci_control)
 find_package(Boost REQUIRED COMPONENTS system thread)
 
 find_package(catkin REQUIRED COMPONENTS
-  actionlib
-  message_generation
+  roscpp
   sensor_msgs
   std_msgs
-  actionlib_msgs
   trajectory_msgs
-  controller_manager
   control_msgs
+  actionlib_msgs
+  message_generation
+  actionlib
+  controller_manager
   rostest
   roslint
 )
@@ -52,4 +53,4 @@ target_link_libraries(davinci_traj_controller
 
 # Testing
 
-# roslint_add_test()
+roslint_add_test()

@@ -10,7 +10,7 @@
 		respawn="false"
 		output="screen"
 		ns="/dvrk/PSM1"
-		args="joint_state_controller joint_traj_controller"
+		args="joint_traj_controller"
 	/>
 
 	<!-- Load joint controller configurations from YAML file to parameter server -->
@@ -24,6 +24,7 @@
 		respawn="false"
 		output="screen"
 		ns="/dvrk/PSM2"
-		args="joint_state_controller joint_traj_controller"
+		args="joint_traj_controller"
 	/>
+	<!-- args="joint_state_controller joint_traj_controller" -->
 </launch>
