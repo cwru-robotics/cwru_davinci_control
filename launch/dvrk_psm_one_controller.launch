@@ -1,0 +1,10 @@
+<launch>
+    <rosparam file="$(find cwru_davinci_control)/config/control_1.yaml" command="load"/>
+
+    <rosparam file="$(find cwru_davinci_control)/config/gripper_control_1.yaml" command="load"/>
+
+    <node name="dvrk_psm_one_controller_spawner" pkg="controller_manager" type="spawner" respawn="false" output="screen" ns="/dvrk_psm" args="dvrk_psm_one_controller"/>
+
+    <node name="dvrk_psm_one_gripper_ontroller_spawner" pkg="controller_manager" type="spawner" respawn="false" output="screen" ns="/dvrk_psm" args="dvrk_psm_one_gripper_controller"/>
+    <!--<node name="controller_spawner" pkg="controller_manager" type="spawner" respawn="false" output="screen" ns="/dvrk_psm" args="joint_traj_controller"/>-->
+</launch>

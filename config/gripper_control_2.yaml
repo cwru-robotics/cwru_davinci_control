@@ -1,0 +1,9 @@
+dvrk_psm:
+  # Position Controllers ---------------------------------------
+  dvrk_psm_two_gripper_controller:
+    type: "position_controllers/JointTrajectoryController"
+    #These should always reflect the joint names given in cwru_davinci_geometry_models/model
+    joints:
+        - two_jaw
+    gains:
+        two_jaw: {p: 0, i: 0, d: 0}
