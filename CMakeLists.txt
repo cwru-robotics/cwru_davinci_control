@@ -45,10 +45,13 @@ target_link_libraries(psm_controller ${catkin_LIBRARIES})
 # Executables
 
 add_executable(davinci_traj_controller src/davinci_hwi.cpp)
+add_executable(dvrk_both_psms_controllers src/dvrk_both_psms_controllers.cpp)
 
 target_link_libraries(davinci_traj_controller
 	${catkin_LIBRARIES}
 )
+
+target_link_libraries(dvrk_both_psms_controllers ${catkin_LIBRARIES})
 
 
 # Testing

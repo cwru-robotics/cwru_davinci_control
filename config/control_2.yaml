@@ -1,31 +1,58 @@
-dvrk/PSM2:
-  # Publish all joint states -----------------------------------
-  joint_state_controller:
-    type: joint_state_controller/JointStateController
-    publish_rate: 20  
-
+dvrk_psm:
   # Position Controllers ---------------------------------------
-  joint_traj_controller:
+  dvrk_psm_two_controller:
     type: "position_controllers/JointTrajectoryController"
     #These should always reflect the joint names given in cwru_davinci_geometry_models/model
     joints:
-        - outer_yaw
-        - outer_pitch
-        - outer_insertion
-        - outer_roll
-        - outer_wrist_pitch
-        - outer_wrist_yaw
-        - jaw
+        - two_outer_yaw
+        - two_outer_pitch
+        - two_outer_insertion
+        - two_outer_roll
+        - two_outer_wrist_pitch
+        - two_outer_wrist_yaw
     gains:
-        outer_yaw: {p: 0, i: 0, d: 0}
-        outer_pitch: {p: 0, i: 0, d: 0}
-        outer_insertion: {p: 0, i: 0, d: 0}
-        outer_roll: {p: 0, i: 0, d: 0}
-        outer_wrist_pitch: {p: 0, i: 0, d: 0}
-        outer_wrist_yaw: {p: 0, i: 0, d: 0}
-        jaw: {p: 0, i: 0, d: 0}
-    allow_partial_joints_goal: true
-        
+        two_outer_yaw: {p: 0, i: 0, d: 0}
+        two_outer_pitch: {p: 0, i: 0, d: 0}
+        two_outer_insertion: {p: 0, i: 0, d: 0}
+        two_outer_roll: {p: 0, i: 0, d: 0}
+        two_outer_wrist_pitch: {p: 0, i: 0, d: 0}
+        two_outer_wrist_yaw: {p: 0, i: 0, d: 0}
+
+  # dvrk_psm_two_gripper_controller:
+  #   type: "position_controllers/JointTrajectoryController"
+  #   #These should always reflect the joint names given in cwru_davinci_geometry_models/model
+  #   joints:
+  #       - two_jaw
+  #   gains:
+  #       two_jaw: {p: 0, i: 0, d: 0}
+
+#dvrk/PSM2:
+#  # Publish all joint states -----------------------------------
+#  joint_state_controller:
+#    type: joint_state_controller/JointStateController
+#    publish_rate: 20
+#
+#  # Position Controllers ---------------------------------------
+#  joint_traj_controller:
+#    type: "position_controllers/JointTrajectoryController"
+#    #These should always reflect the joint names given in cwru_davinci_geometry_models/model
+#    joints:
+#        - outer_yaw
+#        - outer_pitch
+#        - outer_insertion
+#        - outer_roll
+#        - outer_wrist_pitch
+#        - outer_wrist_yaw
+#        - jaw
+#    gains:
+#        outer_yaw: {p: 0, i: 0, d: 0}
+#        outer_pitch: {p: 0, i: 0, d: 0}
+#        outer_insertion: {p: 0, i: 0, d: 0}
+#        outer_roll: {p: 0, i: 0, d: 0}
+#        outer_wrist_pitch: {p: 0, i: 0, d: 0}
+#        outer_wrist_yaw: {p: 0, i: 0, d: 0}
+#        jaw: {p: 0, i: 0, d: 0}
+#    allow_partial_joints_goal: true
 #  joint_group_controller:
 #    type: "effort_controllers/JointGroupPositionController"
 #    joints:

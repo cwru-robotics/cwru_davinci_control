@@ -1,0 +1,15 @@
+<launch>
+	<!-- Load joint controller configurations from YAML file to parameter server -->
+	<rosparam file="$(find cwru_davinci_control)/config/control_psm_1.yaml" command="load"/>
+	<node name="davinci_traj_controller_1" pkg="cwru_davinci_control" type="davinci_traj_controller" respawn="false" output="screen" args="PSM1"/>
+	<!-- load the controllers -->
+	<node
+		name="controller_spawner" 
+		pkg="controller_manager"
+		type="spawner"
+		respawn="false"
+		output="screen"
+		ns="/dvrk/PSM1"
+		args="joint_traj_controller dvrk_psm_one_controller"
+	/>
+</launch>
