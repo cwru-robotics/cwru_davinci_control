@@ -48,6 +48,12 @@ public:
    */
   bool get_psm_state(sensor_msgs::JointState & js);
 
+/**
+   * @brief Report our PSM number
+   *
+   */
+  int get_psm(){ return psm_number;}
+
   /**
    * @brief Wait a given amount of time for a position update, and populate js with it.
    *
