@@ -50,6 +50,17 @@ target_link_libraries(davinci_traj_controller
 	${catkin_LIBRARIES}
 )
 
+add_executable(echo_node src/echo_node.cpp)
+
+target_link_libraries(echo_node
+	${catkin_LIBRARIES}
+)
+
+#add_executable(both_psms_moveit_joint_state_publisher src/both_psms_moveit_joint_state_publisher.cpp)
+
+#target_link_libraries(both_psms_moveit_joint_state_publisher
+#  ${catkin_LIBRARIES}
+#)
 
 # Testing
 

@@ -1,7 +1,8 @@
 <launch>
+
 	<!-- Load joint controller configurations from YAML file to parameter server -->
-	<rosparam file="$(find cwru_davinci_control)/config/control_1.yaml" command="load"/>
-	<node name="davinci_traj_controller_1" pkg="cwru_davinci_control" type="davinci_traj_controller" respawn="false" output="screen" ns="/dvrk/PSM1" args="PSM1"/>
+	<rosparam file="$(find cwru_davinci_control)/config/control_1.yaml" command="load" ns="prefixed"/>
+	<!--node name="davinci_traj_controller_1" pkg="cwru_davinci_control" type="davinci_traj_controller" respawn="false" output="screen" ns="/dvrk/PSM1" args="PSM1"/-->
 	<!-- load the controllers -->
 	<node
 		name="controller_spawner" 
@@ -9,13 +10,13 @@
 		type="spawner"
 		respawn="false"
 		output="screen"
-		ns="/dvrk/PSM1"
+		ns="/prefixed/dvrk/PSM1"
 		args="joint_traj_controller"
 	/>
 
 	<!-- Load joint controller configurations from YAML file to parameter server -->
-	<rosparam file="$(find cwru_davinci_control)/config/control_2.yaml" command="load"/>
-	<node name="davinci_traj_controller_2" pkg="cwru_davinci_control" type="davinci_traj_controller" respawn="false" output="screen" ns="/dvrk/PSM2" args="PSM2"/>
+	<rosparam file="$(find cwru_davinci_control)/config/control_2.yaml" command="load" ns="prefixed"/>
+	<!--node name="davinci_traj_controller_1" pkg="cwru_davinci_control" type="davinci_traj_controller" respawn="false" output="screen" ns="/dvrk/PSM1" args="PSM1"/-->
 	<!-- load the controllers -->
 	<node
 		name="controller_spawner" 
@@ -23,8 +24,21 @@
 		type="spawner"
 		respawn="false"
 		output="screen"
-		ns="/dvrk/PSM2"
+		ns="/prefixed/dvrk/PSM2"
 		args="joint_traj_controller"
 	/>
-	<!-- args="joint_state_controller joint_traj_controller" -->
+
+	<!-- Load joint controller configurations from YAML file to parameter server -->
+	<!--rosparam file="$(find cwru_davinci_control)/config/control_2.yaml" command="load" ns="prefixed"/-->
+	<!--node name="davinci_traj_controller_2" pkg="cwru_davinci_control" type="davinci_traj_controller" respawn="false" output="screen" ns="/dvrk/PSM2" args="PSM2"/-->
+	<!-- load the controllers -->
+	<!--node
+		name="controller_spawner" 
+		pkg="controller_manager"
+		type="spawner"
+		respawn="false"
+		output="screen"
+		ns="/prefixed/dvrk/PSM2"
+		args="joint_traj_controller"
+	/-->
 </launch>

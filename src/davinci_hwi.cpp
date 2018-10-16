@@ -82,9 +82,9 @@ DavinciHWI::DavinciHWI(ros::NodeHandle & n, const std::string & psm)
   ROS_INFO("Registering JSI...");
   for (int i = 0; i < 7; i++)
   {
-    jsh[i] = hardware_interface::JointStateHandle(dvrk_control::joint_names[i], &pos[i], &vel[i], &eff[i]);
+    jsh[i] = hardware_interface::JointStateHandle(psm + "/" + dvrk_control::joint_names[i], &pos[i], &vel[i], &eff[i]);
     jnt_state_interface.registerHandle(jsh[i]);
-    jh[i] = hardware_interface::JointHandle(jnt_state_interface.getHandle(dvrk_control::joint_names[i]), &cmd[i]);
+    jh[i] = hardware_interface::JointHandle(jnt_state_interface.getHandle(psm + "/" + dvrk_control::joint_names[i]), &cmd[i]);
   }
 
   ROS_INFO("Final register.");
